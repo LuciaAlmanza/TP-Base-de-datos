@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 // Obtener todas las entradas
-router.get('/entradas', async (req, res) => {
+router.get('/entradas', async (req, res) => {  // Solo '/entradas'
   try {
     const data = await fetchDataFromMySQL();
     res.json(data);
@@ -19,7 +19,7 @@ router.get('/entradas', async (req, res) => {
 });
 
 // Agregar una nueva entrada
-router.post('/entradas', async (req, res) => {
+router.post('/entradas', async (req, res) => {  // Solo '/entradas'
   const { pelicula, sala, fecha, hora, asientosDisponibles } = req.body;
 
   try {
@@ -37,7 +37,7 @@ router.post('/entradas', async (req, res) => {
 });
 
 // Actualizar una entrada
-router.put('/entradas/:id', async (req, res) => {
+router.put('/entradas/:id', async (req, res) => {  // Solo '/entradas/:id'
   const { id } = req.params;
   const { pelicula, sala, fecha, hora, asientosDisponibles } = req.body;
 
@@ -57,7 +57,7 @@ router.put('/entradas/:id', async (req, res) => {
 });
 
 // Eliminar una entrada
-router.delete('/entradas/:id', async (req, res) => {
+router.delete('/entradas/:id', async (req, res) => {  // Solo '/entradas/:id'
   const { id } = req.params;
 
   try {
@@ -69,3 +69,4 @@ router.delete('/entradas/:id', async (req, res) => {
 });
 
 module.exports = router;
+

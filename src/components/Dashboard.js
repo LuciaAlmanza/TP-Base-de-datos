@@ -24,6 +24,8 @@ const Dashboard = () => {
 
   // Fetch inicial para cargar datos de ambas bases de datos
   useEffect(() => {
+    
+    console.log('useEffect se ejecutó');
     const fetchData = async () => {
       try {
         // Fetch de entradas desde el backend (debe apuntar a la ruta del servidor en el puerto 3000)
@@ -33,6 +35,7 @@ const Dashboard = () => {
         // Fetch de comentarios desde Firebase (esto sigue igual)
         const comentariosSnapshot = await getDocs(collection(db, 'comentarios'));
         const comentariosList = comentariosSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        console.log('Comentarios obtenidos:', comentariosList);  // Verifica los datos aquí
         setComentariosData(comentariosList);
       } catch (error) {
         console.error('Error fetching data: ', error);
