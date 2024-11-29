@@ -26,11 +26,11 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch de entradas desde MySQL
-        const entradasResponse = await axios.get('/api/entradas');
-        setEntradasData(entradasResponse.data);
-
-        // Fetch de comentarios desde Firebase
+        // Fetch de entradas desde el backend (debe apuntar a la ruta del servidor en el puerto 3000)
+        const entradasResponse = await axios.get('http://localhost:3000/api/entradas');  // URL de la API
+        setEntradasData(entradasResponse.data);  // Guarda las entradas en el estado
+  
+        // Fetch de comentarios desde Firebase (esto sigue igual)
         const comentariosSnapshot = await getDocs(collection(db, 'comentarios'));
         const comentariosList = comentariosSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         setComentariosData(comentariosList);
@@ -38,16 +38,16 @@ const Dashboard = () => {
         console.error('Error fetching data: ', error);
       }
     };
-
+  
     fetchData();
-  }, []);
+  }, []);  
 
   // Función para agregar una nueva entrada (MySQL)
   const handleAddEntrada = async () => {
     try {
-      const response = await axios.post('/api/entradas', newEntrada);
-      setEntradasData([...entradasData, { id: response.data.id, ...newEntrada }]);
-      setNewEntrada({ pelicula: '', sala: '', fecha: '', hora: '', asientosDisponibles: '' });
+      const response = await axios.post('http://localhost:3000/api/entradas', newEntrada);  // URL de la API
+      setEntradasData([...entradasData, response.data]);  // Añadir la nueva entrada a la lista
+      setNewEntrada({ pelicula: '', sala: '', fecha: '', hora: '', asientosDisponibles: '' });  // Limpiar formulario
     } catch (error) {
       console.error('Error adding entrada: ', error);
     }
@@ -67,18 +67,17 @@ const Dashboard = () => {
   // Función para actualizar una entrada (MySQL)
   const handleUpdateEntrada = async () => {
     try {
-      await axios.put(`/api/entradas/${editingEntrada.id}`, editingEntrada);
+      const response = await axios.put(`http://localhost:3000/api/entradas/${editingEntrada.id}`, editingEntrada);
       setEntradasData(
         entradasData.map((entrada) =>
           entrada.id === editingEntrada.id ? { ...entrada, ...editingEntrada } : entrada
         )
       );
-      setEditingEntrada(null);
+      setEditingEntrada(null);  // Limpiar el estado de edición
     } catch (error) {
       console.error('Error updating entrada: ', error);
     }
   };
-
   // Función para actualizar un comentario (Firebase)
   const handleUpdateComentario = async () => {
     try {
@@ -98,8 +97,8 @@ const Dashboard = () => {
   // Función para eliminar una entrada (MySQL)
   const handleDeleteEntrada = async (id) => {
     try {
-      await axios.delete(`/api/entradas/${id}`);
-      setEntradasData(entradasData.filter((entrada) => entrada.id !== id));
+      await axios.delete(`http://localhost:3000/api/entradas/${id}`);
+      setEntradasData(entradasData.filter((entrada) => entrada.id !== id));  // Eliminar entrada de la lista
     } catch (error) {
       console.error('Error deleting entrada: ', error);
     }
@@ -302,6 +301,7 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
 
 
 
