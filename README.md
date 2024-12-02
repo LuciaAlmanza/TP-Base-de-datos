@@ -4,7 +4,9 @@
 - Cardoso Landaburu Juan Gabriel 110845
 - Almanza Lucia 110598
 - Ariel Folgueira 109473
-- Nombre 4  
+- Daniela Pareja 100648
+- Ignacio Latorre 101305
+- Agustin Cavo 95971
 
 ---
 
